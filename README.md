@@ -91,8 +91,6 @@
 git clone https://github.com/bznxb197/alcohol-tendency-analysis.git
 cd alcohol-tendency-analysis
 
-# Установка зависимостей
-pip install -r requirements.txt
-
 # Запуск анализа
 jupyter notebook alcohol_analysis.ipynb
+

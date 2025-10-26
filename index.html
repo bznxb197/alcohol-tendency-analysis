@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Скрининг алкогольной зависимости</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            max-width: 800px; 
+            margin: 0 auto; 
+            padding: 20px;
+            background: #f8f9fa;
+        }
+        .card { 
+            border: 1px solid #ddd; 
+            border-radius: 10px; 
+            padding: 30px; 
+            margin: 20px 0;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .btn { 
+            background: #007bff; 
+            color: white; 
+            padding: 12px 30px; 
+            text-decoration: none; 
+            border-radius: 5px;
+            display: inline-block;
+            font-size: 18px;
+            transition: background 0.3s;
+        }
+        .btn:hover {
+            background: #0056b3;
+        }
+        .alert { 
+            background: #d4edda; 
+            padding: 15px; 
+            border-radius: 5px; 
+            margin: 20px 0;
+            border-left: 4px solid #28a745;
+        }
+        .features ul {
+            line-height: 1.8;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🏥 Скрининг алкогольной зависимости</h1>
+        <p class="lead">Научно обоснованный тест для оценки риска</p>
+    </div>
+    
+    <div class="card">
+        <div class="alert">
+            <strong>Точность выявления: 92%</strong> | <strong>Время прохождения: 5-7 минут</strong>
+        </div>
+        
+        <p>Этот тест использует данные 32-й волны Российского мониторинга экономического положения и здоровья населения (RLMS-HSE).</p>
+        
+        <div class="features">
+            <h3>Преимущества методики:</h3>
+            <ul>
+                <li>✅ <strong>Высокая точность</strong> - основано на данных тысяч пациентов</li>
+                <li>✅ <strong>Быстрый результат</strong> - мгновенный расчет после теста</li>
+                <li>✅ <strong>Конфиденциальность</strong> - данные не сохраняются</li>
+                <li>✅ <strong>Научная обоснованность</strong> - алгоритм Random Forest</li>
+            </ul>
+        </div>
+        
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="/test" class="btn">Начать тестирование</a>
+        </div>
+    </div>
+    
+    <div class="card">
+        <h3>📊 Информация для специалистов:</h3>
+        <p style="color: #666; font-size: 14px;">
+            Методика использует алгоритм Random Forest с порогом 0.3, что обеспечивает максимальный recall (92%) для медицинского скрининга. 
+            Модель учитывает демографические, поведенческие и личностные факторы риска.
+        </p>
+    </div>
+</body>
+</html>

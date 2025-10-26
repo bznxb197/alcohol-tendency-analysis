@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Опросник скрининга - 31 вопрос</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            max-width: 800px; 
+            margin: 0 auto; 
+            padding: 20px;
+            background: #f8f9fa;
+        }
+        .form-group { 
+            margin: 20px 0; 
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+        }
+        label { 
+            display: block; 
+            margin: 15px 0 8px 0; 
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .scale-info {
+            font-size: 14px;
+            color: #6c757d;
+            font-style: italic;
+            margin-bottom: 8px;
+        }
+        select, input { 
+            width: 100%; 
+            padding: 12px; 
+            margin: 8px 0; 
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        .btn { 
+            background: #28a745; 
+            color: white; 
+            padding: 18px 40px; 
+            border: none; 
+            border-radius: 8px; 
+            cursor: pointer;
+            font-size: 18px;
+            width: 100%;
+            margin-top: 30px;
+            font-weight: bold;
+        }
+        .section-title {
+            border-left: 4px solid #007bff;
+            padding-left: 15px;
+            margin: 30px 0 20px 0;
+            color: #2c3e50;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>📋 Опросник для оценки рисков <span style="background: #007bff; color: white; padding: 5px 12px; border-radius: 20px;">31 вопрос</span></h1>
+    <p>Пожалуйста, отвечайте честно - это поможет получить точный результат.</p>
+    
+    <form method="POST" action="/submit-test">
+        
+        <!-- Демография - ВЕРНЫЙ ПОРЯДОК -->
+        <div class="form-group">
+            <h3 class="section-title">👤 Основная информация</h3>
+            
+            <label>Ваш возраст:</label>
+            <input type="number" name="age" min="18" max="100" required>
+
+            <label>Ваш пол:</label>
+            <select name="gender" required>
+                <option value="">Выберите пол</option>
+                <option value="1">Мужской</option>
+                <option value="0">Женский</option>
+            </select>
+
+            <label>Ваше образование:</label>
+            <select name="education_level" required>
+                <option value="">Выберите образование</option>
+                <option value="1">Среднее (0-6 классов)</option>
+                <option value="2">Незаконченное среднее (7-8 классов)</option>
+                <option value="3">Незаконченное среднее + курсы</option>
+                <option value="4">Законченное среднее</option>
+                <option value="5">Среднее специальное</option>
+                <option value="6">Высшее и выше</option>
+            </select>
+        </div>
+
+        <!-- Личностные характеристики - ВЕРНЫЙ ПОРЯДОК КАК В МОДЕЛИ -->
+        <div class="form-group">
+            <h3 class="section-title">🧠 Особенности характера</h3>
+            <p class="scale-info">Оцените по шкале от 1 (почти никогда) до 4 (почти всегда)</p>
+
+            <!-- ТОЧНЫЙ ПОРЯДОК КАК В feature_columns -->
+            <label>Вы разговорчивы?</label>
+            <select name="talkativeness" required>
+                <option value="">Выберите оценку</option>
+                <option value="1">1 - Почти никогда</option><option value="2">2 - Иногда</option>
+                <option value="3">3 - Чаще всего</option><option value="4">4 - Почти всегда</option>
+            </select>
+
+            <label>Выполняя задания, вы очень аккуратны?</label>
+            <select name="work_accuracy" required>
+                <option value="">Выберите оценку</option>
+                <option value="1">1 - Почти никогда</option><option value="2">2 - Иногда</option>
+                <option value="3">3 - Чаще всего</option><option value="4">4 - Почти всегда</option>
+            </select>
+
+            <label>Вам приходят в голову оригинальные идеи?</label>
+            <select name="creativity" required>
+                <option value="">Выберите оценку</option>
+                <option value="1">1 - Почти никогда</option><option value="2">2 - Иногда</option>
+                <option value="3">3 - Чаще всего</option><option value="4">4 - Почти всегда</option>
+            </select>
+
+            <label>Вы спокойны в стрессовых ситуациях?</label>
+            <div class="scale-info">Высокая оценка = хорошая стрессоустойчивость</div>
+            <select name="stress_tolerance" required>
+                <option value="">Выберите оценку</option>
+                <option value="4">1 - Почти никогда (очень плохо)</option>
+                <option value="3">2 - Иногда (плохо)</option>
+                <option value="2">3 - Чаще всего (хорошо)</option>
+                <option value="1">4 - Почти всегда (очень хорошо)</option>
+            </select>
+
+            <label>Вы заканчиваете то, что начали?</label>
+            <div class="scale-info">Высокая оценка = высокая добросовестность</div>
+            <select name="task_completion" required>
+                <option value="">Выберите оценку</option>
+                <option value="4">1 - Почти никогда</option>
+                <option value="3">2 - Иногда</option>
+                <option value="2">3 - Чаще всего</option>
+                <option value="1">4 - Почти всегда</option>
+            </select>
+
+            <label>Вы очень усердно трудитесь?</label>
+            <div class="scale-info">Высокая оценка = хорошая трудовая этика</div>
+            <select name="work_ethic" required>
+                <option value="">Выберите оценку</option>
+                <option value="4">1 - Почти никогда</option>
+                <option value="3">2 - Иногда</option>
+                <option value="2">3 - Чаще всего</option>
+                <option value="1">4 - Почти всегда</option>
+            </select>
+
+            <label>Вы легко прощаете других людей?</label>
+            <select name="forgiveness" required>
+                <option value="">Выберите оценку</option>
+                <option value="1">1 - Почти никогда</option><option value="2">2 - Иногда</option>
+                <option value="3">3 - Чаще всего</option><option value="4">4 - Почти всегда</option>
+            </select>
+
+            <label>Вам очень интересно узнавать что-то новое?</label>
+            <select name="curiosity" required>
+                <option value="">Выберите оценку</option>
+                <option value="1">1 - Почти никогда</option><option value="2">2 - Иногда</option>
+                <option value="3">3 - Чаще всего</option><option value="4">4 - Почти всегда</option>
+            </select>
+
+            <label>Вам нравится работать над долгосрочными задачами?</label>
+            <div class="scale-info">Высокая оценка = ориентация на долгосрочные цели</div>
+            <select name="long_term_focus" required>
+                <option value="">Выберите оценку</option>
+                <option value="4">1 - Почти никогда</option>
+                <option value="3">2 - Иногда</option>
+                <option value="2">3 - Чаще всего</option>
+                <option value="1">4 - Почти всегда</option>
+            </select>
+
+            <label>Вы получаете удовольствие от искусства, природы, музыки?</label>
+            <select name="aesthetic_appreciation" required>
+                <option value="">Выберите оценку</option>
+                <option value="1">1 - Почти никогда</option><option value="2">2 - Иногда</option>
+                <option value="3">3 - Чаще всего</option><option value="4">4 - Почти всегда</option>
+            </select>
+
+            <label>Вы задумываетесь о последствиях своих поступков?</label>
+            <div class="scale-info">Высокая оценка = ориентация на будущее</div>
+            <select name="future_orientation" required>
+                <option value="">Выберите оценку</option>
+                <option value="4">1 - Почти никогда</option>
+                <option value="3">2 - Иногда</option>
+                <option value="2">3 - Чаще всего</option>
+                <option value="1">4 - Почти всегда</option>
+            </select>
+
+            <label>Вы очень вежливы с другими людьми?</label>
+            <select name="politeness" required>
+                <option value="">Выберите оценку</option>
+                <option value="1">1 - Почти никогда</option><option value="2">2 - Иногда</option>
+                <option value="3">3 - Чаще всего</option><option value="4">4 - Почти всегда</option>
+            </select>
+
+            <label>Вы работаете очень хорошо и быстро?</label>
+            <div class="scale-info">Высокая оценка = высокая эффективность</div>
+            <select name="work_efficiency" required>
+                <option value="">Выберите оценку</option>
+                <option value="4">1 - Почти никогда</option>
+                <option value="3">2 - Иногда</option>
+                <option value="2">3 - Чаще всего</option>
+                <option value="1">4 - Почти всегда</option>
+            </select>
+
+            <label>Вы щедро делитесь с другими?</label>
+            <select name="generosity" required>
+                <option value="">Выберите оценку</option>
+                <option value="1">1 - Почти никогда</option><option value="2">2 - Иногда</option>
+                <option value="3">3 - Чаще всего</option><option value="4">4 - Почти всегда</option>
+            </select>
+
+            <label>Вы легко заводите друзей?</label>
+            <select name="sociability" required>
+                <option value="">Выберите оценку</option>
+                <option value="1">1 - Почти никогда</option><option value="2">2 - Иногда</option>
+                <option value="3">3 - Чаще всего</option><option value="4">4 - Почти всегда</option>
+            </select>
+
+            <label>Вы тщательно всё обдумываете перед принятием решений?</label>
+            <div class="scale-info">Высокая оценка = высокая осторожность</div>
+            <select name="decision_carefulness" required>
+                <option value="">Выберите оценку</option>
+                <option value="4">1 - Почти никогда</option>
+                <option value="3">2 - Иногда</option>
+                <option value="2">3 - Чаще всего</option>
+                <option value="1">4 - Почти всегда</option>
+            </select>
+
+            <label>Вы предпочитаете держать свое мнение при себе?</label>
+            <select name="reserved_opinions" required>
+                <option value="">Выберите оценку</option>
+                <option value="1">1 - Почти никогда</option><option value="2">2 - Иногда</option>
+                <option value="3">3 - Чаще всего</option><option value="4">4 - Почти всегда</option>
+            </select>
+
+            <label>Люди используют вас в своих интересах?</label>
+            <select name="exploitability" required>
+                <option value="">Выберите оценку</option>
+                <option value="1">1 - Почти никогда</option><option value="2">2 - Иногда</option>
+                <option value="3">3 - Чаще всего</option><option value="4">4 - Почти всегда</option>
+            </select>
+
+            <label>Вы склонны к беспокойству?</label>
+            <select name="anxiety" required>
+                <option value="">Выберите оценку</option>
+                <option value="1">1 - Почти никогда</option><option value="2">2 - Иногда</option>
+                <option value="3">3 - Чаще всего</option><option value="4">4 - Почти всегда</option>
+            </select>
+
+            <label>Вам больше нравится расслабляться, чем усердно трудиться?</label>
+            <select name="preference_leisure" required>
+                <option value="">Выберите оценку</option>
+                <option value="1">1 - Почти никогда</option><option value="2">2 - Иногда</option>
+                <option value="3">3 - Чаще всего</option><option value="4">4 - Почти всегда</option>
+            </select>
+
+            <label>Вас легко заставить нервничать?</label>
+            <select name="nervousness" required>
+                <option value="">Выберите оценку</option>
+                <option value="1">1 - Почти никогда</option><option value="2">2 - Иногда</option>
+                <option value="3">3 - Чаще всего</option><option value="4">4 - Почти всегда</option>
+            </select>
+
+            <label>Люди не очень хорошо к вам относятся?</label>
+            <select name="perceived_hostility" required>
+                <option value="">Выберите оценку</option>
+                <option value="1">1 - Почти никогда</option><option value="2">2 - Иногда</option>
+                <option value="3">3 - Чаще всего</option><option value="4">4 - Почти всегда</option>
+            </select>
+        </div>
+
+        <!-- Рисковое поведение - ВЕРНЫЙ ПОРЯДОК -->
+        <div class="form-group">
+            <h3 class="section-title">🎯 Склонность к риску</h3>
+
+            <label>Общая склонность к риску:</label>
+            <div class="scale-info">Оцените от 0 (совсем не рискую) до 10 (очень люблю рисковать)</div>
+            <input type="number" name="general_risk" min="0" max="10" required>
+
+            <label>Склонность к риску при вождении:</label>
+            <select name="driving_risk" required>
+                <option value="">Выберите ответ</option>
+                <option value="0">Низкая</option>
+                <option value="1">Высокая</option>
+            </select>
+
+            <label>Склонность к финансовому риску:</label>
+            <select name="financial_risk" required>
+                <option value="">Выберите ответ</option>
+                <option value="0">Низкая</option>
+                <option value="1">Высокая</option>
+            </select>
+
+            <label>Склонность к риску для здоровья:</label>
+            <select name="health_risk" required>
+                <option value="">Выберите ответ</option>
+                <option value="0">Низкая</option>
+                <option value="1">Высокая</option>
+            </select>
+        </div>
+
+        <!-- Здоровье - ВЕРНЫЙ ПОРЯДОК -->
+        <div class="form-group">
+            <h3 class="section-title">💊 Здоровье</h3>
+
+            <label>Как вы оцениваете состояние своего здоровья?</label>
+            <select name="self_rated_health" required>
+                <option value="">Выберите оценку</option>
+                <option value="1">Отличное</option>
+                <option value="2">Хорошее</option>
+                <option value="3">Удовлетворительное</option>
+                <option value="4">Плохое</option>
+                <option value="5">Очень плохое</option>
+            </select>
+
+            <label>Курите ли вы в настоящее время?</label>
+            <select name="is_smoker" required>
+                <option value="">Выберите ответ</option>
+                <option value="0">Нет</option>
+                <option value="1">Да</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn">🎯 Получить результат анализа</button>
+    </form>
+</body>
+</html>

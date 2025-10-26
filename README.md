@@ -30,6 +30,15 @@
 - **Мгновенные результаты** с интерпретацией
 - **Рекомендации** на основе прогноза модели
 
+### 📱 Главная страница
+![Главная страница](screenshots/index.png)
+
+### 📊 Страница тестирования
+![Тестирование](screenshots/test.png)
+
+### 📈 Результаты
+![Результаты](screenshots/result.png)
+
 ## 🚀 Быстрый старт
 
 ```bash
@@ -65,6 +74,10 @@ alcohol-tendency-analysis/
 ├── alcohol_analysis.ipynb          # Анализ данных и ML
 ├── alcohol_screening_server.py     # Веб-сервер
 ├── model.joblib                    # Обученная модель
+├── screenshots/
+│   ├── index.png
+│   ├── test.png
+│   └── results.png
 ├── templates/                      # HTML страницы
 │   ├── index.html                  # Главная
 │   ├── test.html                   # Тестирование
@@ -78,3 +91,4 @@ alcohol-tendency-analysis/
 ---
 
 *Проект предназначен для исследовательских целей и не заменяет медицинскую диагностику.*
+

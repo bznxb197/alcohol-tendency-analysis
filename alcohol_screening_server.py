@@ -1,18 +1,21 @@
 import socket
 import multiprocessing
 import os
-import datetime
 import joblib
 import urllib.parse
 import numpy as np
 import traceback 
 
+# Конфигурация для продакшена
+HOST = os.environ.get('HOST', '0.0.0.0')  # Важно для деплоя!
+PORT = int(os.environ.get('PORT', 8080))
+
 # Загрузка модели
 try:
     model = joblib.load('model.joblib')
     print("✅ Модель загружена успешно")
-except:
-    print("❌ Ошибка загрузки модели. Используется заглушка.")
+except Exception as e:
+    print(f"❌ Ошибка загрузки модели: {e}. Используется заглушка.")
     model = None
 
 def load_template(template_name):
@@ -57,83 +60,10 @@ Connection: close
     return response.encode('utf-8')
 
 def handle_submit_test(post_data):
-    """Обработка результатов теста с бинарной классификацией"""
+    """Обработка результатов теста"""
     try:
-        # Парсим POST данные
-        params = urllib.parse.parse_qs(post_data)
-        
-        print(f"📊 Получены параметры: {list(params.keys())}")
-        
-        # Извлекаем признаки (порядок как в модели)
-        features = [
-            # Демография (3)
-            int(params.get('age', [0])[0]),
-            int(params.get('gender', [0])[0]),
-            int(params.get('education_level', [3])[0]),
-            
-            # Личностные характеристики (22)
-            int(params.get('talkativeness', [3])[0]),
-            int(params.get('work_accuracy', [3])[0]),
-            int(params.get('creativity', [3])[0]),
-            int(params.get('stress_tolerance', [3])[0]),
-            int(params.get('task_completion', [3])[0]),
-            int(params.get('work_ethic', [3])[0]),
-            int(params.get('forgiveness', [3])[0]),
-            int(params.get('curiosity', [3])[0]),
-            int(params.get('long_term_focus', [3])[0]),
-            int(params.get('aesthetic_appreciation', [3])[0]),
-            int(params.get('future_orientation', [3])[0]),
-            int(params.get('politeness', [3])[0]),
-            int(params.get('work_efficiency', [3])[0]),
-            int(params.get('generosity', [3])[0]),
-            int(params.get('sociability', [3])[0]),
-            int(params.get('decision_carefulness', [3])[0]),
-            int(params.get('reserved_opinions', [3])[0]),
-            int(params.get('exploitability', [3])[0]),
-            int(params.get('anxiety', [3])[0]),
-            int(params.get('preference_leisure', [3])[0]),
-            int(params.get('nervousness', [3])[0]),
-            int(params.get('perceived_hostility', [3])[0]),
-            
-            # Рисковое поведение (4)
-            int(params.get('general_risk', [0])[0]),
-            int(params.get('driving_risk', [0])[0]),
-            int(params.get('financial_risk', [0])[0]),
-            int(params.get('health_risk', [0])[0]),
-            
-            # Здоровье и курение (2)
-            int(params.get('self_rated_health', [3])[0]),
-            int(params.get('is_smoker', [0])[0]),
-        ]
-        
-        print(f"🔢 Признаков: {len(features)}")
-        
-        # Преобразуем в 2D массив
-        features_2d = np.array(features).reshape(1, -1)
-        
-        # БИНАРНОЕ ПРЕДСКАЗАНИЕ (склонен/не склонен)
-        if model is not None:
-            prediction = model.predict(features_2d)[0]  # 0 или 1
-            probability = model.predict_proba(features_2d)[0][1]  # для информации
-        else:
-            prediction = 1  # заглушка - склонен
-            probability = 0.7
-        
-        # БИНАРНЫЕ РЕЗУЛЬТАТЫ
-        if prediction == 1:
-            risk_level = "high"
-            result_text = "ВЫЯВЛЕНА СКЛОННОСТЬ"
-            recommendation = "Рекомендуется консультация специалиста"
-            icon = "🚨"
-            color = "red"
-        else:
-            risk_level = "low" 
-            result_text = "СКЛОННОСТЬ НЕ ВЫЯВЛЕНА"
-            recommendation = "Рутинное медицинское наблюдение"
-            icon = "✅"
-            color = "green"
-        
-        print(f"🎯 Результат: {'СКЛОНЕН' if prediction == 1 else 'НЕ СКЛОНЕН'} (вероятность: {probability:.1%})")
+        # Ваша существующая логика обработки...
+        # ... (оставьте ваш текущий код без изменений)
         
         # Редирект на страницу результата
         redirect_url = (
@@ -141,12 +71,8 @@ def handle_submit_test(post_data):
             f"risk={risk_level}&"
             f"result={urllib.parse.quote(result_text)}&"
             f"rec={urllib.parse.quote(recommendation)}&"
-            f"age={features[0]}&"
-            f"gender={'Мужской' if features[1] == 1 else 'Женский'}&"
-            f"smoking={'Да' if features[30] == 1 else 'Нет'}&"
             f"icon={urllib.parse.quote(icon)}&"
-            f"color={color}&"
-            f"prob={probability:.1%}"  # оставляем для отладки
+            f"color={color}"
         )
         
         response = f"""HTTP/1.1 303 See Other
@@ -158,13 +84,10 @@ Connection: close
         
     except Exception as e:
         print(f"❌ Ошибка: {e}")
-        import traceback
-        print(f"🔍 Traceback: {traceback.format_exc()}")
-        
         error_html = f"""
         <html><body style="font-family: Arial; text-align: center; padding: 50px;">
             <h1>❌ Ошибка</h1><p>{str(e)}</p>
-            <a href="/test" style="background: #007bff; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; margin: 10px;">Вернуться к тесту</a>
+            <a href="/test">Вернуться к тесту</a>
         </body></html>
         """
         return error_html.encode('utf-8')
@@ -193,10 +116,9 @@ def handle_client(client_socket, id):
             response = handle_index()
         elif url == '/test':
             response = handle_test()
-        elif url.startswith('/result.html'):  # ← ВАЖНО: добавили эту строку
-            response = handle_result()         # ← И эту
+        elif url.startswith('/result.html'):
+            response = handle_result()
         elif url == '/submit-test' and method == 'POST':
-            # Извлекаем POST данные
             content_length = 0
             for line in lines:
                 if line.startswith('Content-Length:'):
@@ -233,10 +155,10 @@ def main():
     """Запуск сервера"""
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    server_socket.bind(('127.0.0.1', 8080))
+    server_socket.bind((HOST, PORT))
     server_socket.listen(5)
     
-    print("🚀 Alcohol Screening Server запущен на http://127.0.0.1:8080")
+    print(f"🚀 Alcohol Screening Server запущен на http://{HOST}:{PORT}")
     print("📊 Модель:", "загружена" if model else "не загружена (используется заглушка)")
     
     # Создаем папку templates если её нет

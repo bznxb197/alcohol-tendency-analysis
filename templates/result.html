@@ -5,12 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Результат скрининга</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
+        * { margin:0; padding:0; box-sizing:border-box; }
         body {
             font-family: 'Arial', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -20,12 +15,7 @@
             justify-content: center;
             padding: 20px;
         }
-        
-        .container {
-            max-width: 600px;
-            width: 100%;
-        }
-        
+        .container { max-width: 600px; width: 100%; }
         .result-card {
             background: white;
             border-radius: 20px;
@@ -33,129 +23,43 @@
             box-shadow: 0 20px 40px rgba(0,0,0,0.1);
             text-align: center;
         }
-        
-        .icon {
-            font-size: 80px;
-            margin-bottom: 20px;
-        }
-        
-        .result-text {
-            font-size: 28px;
-            font-weight: bold;
-            margin-bottom: 15px;
-            padding: 15px;
-            border-radius: 10px;
-        }
-        
-        .result-high {
-            background: #ffe6e6;
-            color: #d63031;
-            border: 2px solid #d63031;
-        }
-        
-        .result-low {
-            background: #e6f7e6;
-            color: #27ae60;
-            border: 2px solid #27ae60;
-        }
-        
-        .recommendation {
-            background: #f8f9fa;
-            padding: 25px;
-            border-radius: 15px;
-            margin: 25px 0;
-            font-size: 18px;
-            line-height: 1.5;
-        }
-        
-        .patient-info {
-            background: #e9ecef;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
-            font-size: 14px;
-        }
-        
-        .buttons {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            margin-top: 30px;
-        }
-        
-        .btn {
-            padding: 12px 30px;
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            transition: all 0.3s ease;
-        }
-        
-        .btn-primary {
-            background: #007bff;
-            color: white;
-        }
-        
-        .btn-secondary {
-            background: #6c757d;
-            color: white;
-        }
-        
-        .disclaimer {
-            margin-top: 25px;
-            padding: 15px;
-            background: #fff3cd;
-            border: 1px solid #ffeaa7;
-            border-radius: 10px;
-            font-size: 12px;
-            color: #856404;
-        }
-        
-        .debug-info {
-            margin-top: 15px;
-            padding: 10px;
-            background: #f8f9fa;
-            border-radius: 5px;
-            font-size: 12px;
-            color: #6c757d;
-        }
+        .icon { font-size: 80px; margin-bottom: 20px; }
+        .result-text { font-size: 28px; font-weight: bold; margin-bottom: 15px; padding: 15px; border-radius: 10px; }
+        .result-high { background: #ffe6e6; color: #d63031; border: 2px solid #d63031; }
+        .result-medium { background: #fff4e6; color: #e67e22; border: 2px solid #e67e22; }
+        .result-low { background: #e6f7e6; color: #27ae60; border: 2px solid #27ae60; }
+        .recommendation { background: #f8f9fa; padding: 25px; border-radius: 15px; margin: 25px 0; font-size: 18px; line-height: 1.5; }
+        .patient-info { background: #e9ecef; padding: 20px; border-radius: 10px; margin: 20px 0; font-size: 14px; }
+        .buttons { display: flex; gap: 15px; justify-content: center; margin-top: 30px; }
+        .btn { padding: 12px 30px; border: none; border-radius: 10px; font-size: 16px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-block; transition: all 0.3s ease; }
+        .btn-primary { background: #007bff; color: white; }
+        .btn-secondary { background: #6c757d; color: white; }
+        .disclaimer { margin-top: 25px; padding: 15px; background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 10px; font-size: 12px; color: #856404; }
+        .debug-info { margin-top: 15px; padding: 10px; background: #f8f9fa; border-radius: 5px; font-size: 12px; color: #6c757d; }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="result-card">
             <div class="icon" id="icon">🎯</div>
-            
-            <div class="result-text" id="resultText">
-                РЕЗУЛЬТАТ АНАЛИЗА
-            </div>
-            
+            <div class="result-text" id="resultText">РЕЗУЛЬТАТ АНАЛИЗА</div>
             <div class="recommendation" id="recommendation">
                 <strong>Рекомендация:</strong><br>
                 <span id="recText">Ожидание результата...</span>
             </div>
-            
             <div class="patient-info">
                 <strong>Данные пациента:</strong><br>
                 Возраст: <span id="patientAge">0</span> лет | 
                 Пол: <span id="patientGender">Не указан</span> | 
                 Курение: <span id="patientSmoking">Нет</span>
             </div>
-            
             <div class="buttons">
                 <a href="/test" class="btn btn-primary">🔄 Пройти тест снова</a>
                 <a href="/" class="btn btn-secondary">🏠 На главную</a>
             </div>
-            
-            <!-- Для отладки (можно убрать в продакшене) -->
             <div class="debug-info" id="debugInfo" style="display: none;">
                 Вероятность: <span id="probability">0%</span>
             </div>
-            
             <div class="disclaimer">
                 ⚠️ Данный тест является скрининговым инструментом и не заменяет консультацию врача. 
                 Для точной диагностики обратитесь к специалисту.
@@ -164,7 +68,6 @@
     </div>
 
     <script>
-        // Получаем параметры из URL
         const urlParams = new URLSearchParams(window.location.search);
         const riskLevel = urlParams.get('risk') || 'low';
         const resultText = urlParams.get('result') || 'РЕЗУЛЬТАТ АНАЛИЗА';
@@ -173,10 +76,8 @@
         const gender = urlParams.get('gender') || 'Не указан';
         const smoking = urlParams.get('smoking') || 'Нет';
         const icon = urlParams.get('icon') || '🎯';
-        const color = urlParams.get('color') || 'green';
         const probability = urlParams.get('prob') || '0%';
-        
-        // Устанавливаем значения
+
         document.getElementById('icon').textContent = icon;
         document.getElementById('resultText').textContent = resultText;
         document.getElementById('recText').textContent = decodeURIComponent(recommendation);
@@ -184,16 +85,16 @@
         document.getElementById('patientGender').textContent = gender;
         document.getElementById('patientSmoking').textContent = smoking;
         document.getElementById('probability').textContent = probability;
-        
-        // Применяем стили в зависимости от результата
+
         const resultElement = document.getElementById('resultText');
         if (riskLevel === 'high') {
             resultElement.className = 'result-text result-high';
+        } else if (riskLevel === 'medium') {
+            resultElement.className = 'result-text result-medium';
         } else {
             resultElement.className = 'result-text result-low';
         }
-        
-        // Показываем отладочную информацию (можно убрать)
+
         document.getElementById('debugInfo').style.display = 'block';
     </script>
 </body>

@@ -1,9 +1,10 @@
 import socket
 import os
 import joblib
-import urllib.parse
+import urllib.parsepython 
 import numpy as np
 import mimetypes
+import threading
 
 HOST = os.environ.get('HOST', '0.0.0.0')
 PORT = int(os.environ.get('PORT', 8080))
@@ -11,12 +12,15 @@ PORT = int(os.environ.get('PORT', 8080))
 # ----------------------------
 # Загрузка модели
 # ----------------------------
-try:
-    model = joblib.load('model.joblib')
-    print("✅ Модель загружена успешно", flush=True)
-except:
-    print("⚠ Модель не найдена. Используется заглушка", flush=True)
-    model = None
+def load_model():
+    if os.path.exists('model.joblib'):
+        print("✅ Модель загружена успешно", flush=True)
+        return joblib.load('model.joblib')
+    else:
+        print("⚠ Модель не найдена. Используется заглушка", flush=True)
+        return None
+
+model = load_model()
 
 # ----------------------------
 # MIME types
@@ -86,7 +90,7 @@ def handle_submit_test(post_body):
         params = urllib.parse.parse_qs(post_body)
         
         # -----------------------------
-        # Собираем все 31 признаков в том же порядке, что при обучении
+        # Собираем признаки
         # -----------------------------
         features = [
             int(params.get('age', ['0'])[0]),
@@ -124,6 +128,9 @@ def handle_submit_test(post_body):
         
         features_2d = np.array(features).reshape(1, -1)
         
+        # -----------------------------
+        # Предсказание
+        # -----------------------------
         if model:
             prediction = int(model.predict(features_2d)[0])
             probability = model.predict_proba(features_2d)[0][1]
@@ -131,18 +138,27 @@ def handle_submit_test(post_body):
             prediction = 1
             probability = 0.7
         
-        if prediction==1:
-            risk='high'
-            result_text='ВЫЯВЛЕНА СКЛОННОСТЬ'
-            rec='Рекомендуется консультация специалиста'
-            icon='🚨'
-            color='red'
+        # -----------------------------
+        # Категории риска
+        # -----------------------------
+        if probability >= 0.7:
+            risk = 'high'
+            result_text = 'ВЫЯВЛЕНА СКЛОННОСТЬ'
+            rec = 'Рекомендуется консультация специалиста'
+            icon = '🚨'
+            color = 'red'
+        elif probability >= 0.4:
+            risk = 'medium'
+            result_text = 'ВЫЯВЛЕНА СРЕДНЯЯ СКЛОННОСТЬ'
+            rec = 'Следует быть внимательным, возможно наблюдение специалиста'
+            icon = '⚠️'
+            color = 'orange'
         else:
-            risk='low'
-            result_text='СКЛОННОСТЬ НЕ ВЫЯВЛЕНА'
-            rec='Рутинное наблюдение'
-            icon='✅'
-            color='green'
+            risk = 'low'
+            result_text = 'СКЛОННОСТЬ НЕ ВЫЯВЛЕНА'
+            rec = 'Рутинное наблюдение'
+            icon = '✅'
+            color = 'green'
         
         # -----------------------------
         # Редирект на результат
@@ -166,19 +182,24 @@ def handle_submit_test(post_body):
         return build_response(error_html.encode('utf-8'), 500)
 
 # ----------------------------
-# Обработка клиента
+# Обработка клиента в отдельном потоке
 # ----------------------------
 def handle_client(client_socket):
     try:
+        client_socket.settimeout(5)
         request = b""
         while True:
             chunk = client_socket.recv(4096)
+            if not chunk:
+                break
             request += chunk
             if len(chunk) < 4096:
                 break
+        
         if not request:
             client_socket.close()
             return
+        
         request_text = request.decode('utf-8', errors='ignore')
         first_line = request_text.splitlines()[0]
         method, full_url = first_line.split()[:2]
@@ -200,7 +221,8 @@ def handle_client(client_socket):
         elif path.startswith('/result'):
             response = handle_result(query)
         elif path=='/submit-test' and method=='POST':
-            body = request_text.split("\r\n\r\n",1)[1] if "\r\n\r\n" in request_text else ""
+            header_end = request.find(b"\r\n\r\n") + 4
+            body = request[header_end:]
             response = handle_submit_test(body)
         else:
             response = build_response(b"<h1>404 Not Found</h1>",404)
@@ -228,7 +250,7 @@ def main():
     while True:
         client_socket, addr = server_socket.accept()
         print(f"👤 Подключение: {addr}", flush=True)
-        handle_client(client_socket)
+        threading.Thread(target=handle_client, args=(client_socket,), daemon=True).start()
 
 if __name__=="__main__":
     main()

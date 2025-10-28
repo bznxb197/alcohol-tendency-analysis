@@ -1,7 +1,7 @@
 import socket
 import os
 import joblib
-import urllib.parsepython 
+import urllib.parse
 import numpy as np
 import mimetypes
 import threading

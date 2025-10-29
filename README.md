@@ -36,7 +36,7 @@
 - **31 вопрос** для комплексной оценки
 - **Мгновенные результаты** с интерпретацией
 - **Рекомендации** на основе прогноза модели
-- **Доступно онлайн:** [https://alcohol-tendency-analysis-4.onrender.com](https://alcohol-tendency-analysis-4.onrender.com)
+- **Доступно онлайн:** [https://alcohol-tendency-analysis-5.onrender.com](https://alcohol-tendency-analysis-5.onrender.com)
 
 ### 📱 Главная страница
 ![Главная страница](screenshots/index.png)
@@ -99,6 +99,7 @@ alcohol-tendency-analysis/
 ---
 
 *Проект предназначен для исследовательских целей и не заменяет медицинскую диагностику.*
+
 
 
 

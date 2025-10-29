@@ -7,7 +7,7 @@ import mimetypes
 import threading
 
 HOST = os.environ.get('HOST', '0.0.0.0')
-PORT = int(os.environ.get('PORT', 8080))
+PORT = int(os.environ.get('PORT', 10000))
 
 # ----------------------------
 # Загрузка модели

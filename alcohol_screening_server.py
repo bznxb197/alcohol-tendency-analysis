@@ -6,7 +6,7 @@ import numpy as np
 import mimetypes
 import threading
 
-HOST = os.environ.get('HOST', '0.0.0.0')
+HOST = os.environ.get('HOST', '127.0.0.1')
 PORT = int(os.environ.get('PORT', 8080))
 
 # ----------------------------
@@ -85,16 +85,16 @@ def handle_result(query=""):
 def handle_submit_test(post_body):
     try:
         # -----------------------------
-        # Парсим POST данные
+        # Декодируем POST данные и парсим
         # -----------------------------
-        params = urllib.parse.parse_qs(post_body)
+        params = urllib.parse.parse_qs(post_body.decode('utf-8'))
         
         # -----------------------------
-        # Собираем признаки
+        # Собираем признаки для модели
         # -----------------------------
         features = [
             int(params.get('age', ['0'])[0]),
-            int(params.get('gender', ['0'])[0]),
+            int(params.get('gender', ['0'])[0]),  # 1=Мужской, 0=Женский
             int(params.get('education_level', ['3'])[0]),
             int(params.get('talkativeness', ['3'])[0]),
             int(params.get('work_accuracy', ['3'])[0]),
@@ -123,13 +123,12 @@ def handle_submit_test(post_body):
             int(params.get('financial_risk', ['0'])[0]),
             int(params.get('health_risk', ['0'])[0]),
             int(params.get('self_rated_health', ['3'])[0]),
-            int(params.get('is_smoker', ['0'])[0]),
+            int(params.get('is_smoker', ['0'])[0]),  # 1=Да, 0=Нет
         ]
-        
         features_2d = np.array(features).reshape(1, -1)
         
         # -----------------------------
-        # Предсказание
+        # Предсказание модели
         # -----------------------------
         if model:
             prediction = int(model.predict(features_2d)[0])
@@ -161,16 +160,19 @@ def handle_submit_test(post_body):
             color = 'green'
         
         # -----------------------------
-        # Редирект на результат
+        # Формируем редирект на результат
         # -----------------------------
+        gender_str = 'Мужской' if features[1] == 1 else 'Женский'
+        smoker_str = 'Да' if features[30] == 1 else 'Нет'
+        
         redirect_url = (
             f"/result.html?"
             f"risk={risk}&"
             f"result={urllib.parse.quote(result_text)}&"
             f"rec={urllib.parse.quote(rec)}&"
             f"age={features[0]}&"
-            f"gender={'Мужской' if features[1]==1 else 'Женский'}&"
-            f"smoking={'Да' if features[30]==1 else 'Нет'}&"
+            f"gender={urllib.parse.quote(gender_str)}&"
+            f"smoking={urllib.parse.quote(smoker_str)}&"
             f"icon={urllib.parse.quote(icon)}&"
             f"color={color}&"
             f"prob={probability:.1%}"
@@ -180,6 +182,7 @@ def handle_submit_test(post_body):
     except Exception as e:
         error_html = f"<h1>Ошибка: {e}</h1>"
         return build_response(error_html.encode('utf-8'), 500)
+
 
 # ----------------------------
 # Обработка клиента в отдельном потоке

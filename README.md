@@ -57,6 +57,9 @@
 git clone https://github.com/bznxb197/alcohol-tendency-analysis.git
 cd alcohol-tendency-analysis
 
+# Установка зависимостей
+pip install -r requirements.txt
+
 # Запуск веб-приложения
 python alcohol_screening_server.py
 # Приложение доступно: http://localhost:8080
@@ -96,6 +99,7 @@ alcohol-tendency-analysis/
 ---
 
 *Проект предназначен для исследовательских целей и не заменяет медицинскую диагностику.*
+
 
 
 

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Опросник скрининга – 32 вопроса</title>
+    <title>Опросник скрининга - 31 вопрос</title>
     <style>
         body { 
             font-family: Arial, sans-serif; 
@@ -62,12 +62,12 @@
     </style>
 </head>
 <body>
-    <h1>📋 Опросник для оценки рисков <span style="background: #007bff; color: white; padding: 5px 12px; border-radius: 20px;">32 вопроса</span></h1>
-    <p>Пожалуйста, отвечайте честно – это поможет получить точный результат.</p>
+    <h1>📋 Опросник для оценки рисков <span style="background: #007bff; color: white; padding: 5px 12px; border-radius: 20px;">31 вопрос</span></h1>
+    <p>Пожалуйста, отвечайте честно - это поможет получить точный результат.</p>
     
     <form method="POST" action="/submit-test">
         
-        <!-- Демография -->
+        <!-- Демография - ВЕРНЫЙ ПОРЯДОК -->
         <div class="form-group">
             <h3 class="section-title">👤 Основная информация</h3>
             
@@ -93,11 +93,12 @@
             </select>
         </div>
 
-        <!-- Личностные характеристики (порядок как в модели) -->
+        <!-- Личностные характеристики - ВЕРНЫЙ ПОРЯДОК КАК В МОДЕЛИ -->
         <div class="form-group">
             <h3 class="section-title">🧠 Особенности характера</h3>
             <p class="scale-info">Оцените по шкале от 1 (почти никогда) до 4 (почти всегда)</p>
 
+            <!-- ТОЧНЫЙ ПОРЯДОК КАК В feature_columns -->
             <label>Вы разговорчивы?</label>
             <select name="talkativeness" required>
                 <option value="">Выберите оценку</option>
@@ -274,54 +275,37 @@
             </select>
         </div>
 
-        <!-- Рисковое поведение + future_sacrifice (все шкалы 0–10) -->
+        <!-- Рисковое поведение - ВЕРНЫЙ ПОРЯДОК -->
         <div class="form-group">
-            <h3 class="section-title">🎯 Склонность к риску и планированию</h3>
+            <h3 class="section-title">🎯 Склонность к риску</h3>
 
-            <label>Общая склонность к риску (0–10):</label>
-            <div class="scale-info">0 – совсем не рискую, 10 – очень люблю рисковать</div>
+            <label>Общая склонность к риску:</label>
+            <div class="scale-info">Оцените от 0 (совсем не рискую) до 10 (очень люблю рисковать)</div>
             <input type="number" name="general_risk" min="0" max="10" required>
 
-            <label>Склонность к риску при вождении (0–10):</label>
+            <label>Склонность к риску при вождении:</label>
             <select name="driving_risk" required>
-                <option value="">Выберите оценку</option>
-                <option value="0">0 – совсем не рискую</option>
-                <option value="1">1</option><option value="2">2</option><option value="3">3</option>
-                <option value="4">4</option><option value="5">5</option>
-                <option value="6">6</option><option value="7">7</option>
-                <option value="8">8</option><option value="9">9</option>
-                <option value="10">10 – очень люблю рисковать</option>
+                <option value="">Выберите ответ</option>
+                <option value="0">Низкая</option>
+                <option value="1">Высокая</option>
             </select>
 
-            <label>Склонность к финансовому риску (0–10):</label>
+            <label>Склонность к финансовому риску:</label>
             <select name="financial_risk" required>
-                <option value="">Выберите оценку</option>
-                <option value="0">0 – совсем не рискую</option>
-                <option value="1">1</option><option value="2">2</option><option value="3">3</option>
-                <option value="4">4</option><option value="5">5</option>
-                <option value="6">6</option><option value="7">7</option>
-                <option value="8">8</option><option value="9">9</option>
-                <option value="10">10 – очень люблю рисковать</option>
+                <option value="">Выберите ответ</option>
+                <option value="0">Низкая</option>
+                <option value="1">Высокая</option>
             </select>
 
-            <label>Склонность к риску для здоровья (0–10):</label>
+            <label>Склонность к риску для здоровья:</label>
             <select name="health_risk" required>
-                <option value="">Выберите оценку</option>
-                <option value="0">0 – совсем не рискую</option>
-                <option value="1">1</option><option value="2">2</option><option value="3">3</option>
-                <option value="4">4</option><option value="5">5</option>
-                <option value="6">6</option><option value="7">7</option>
-                <option value="8">8</option><option value="9">9</option>
-                <option value="10">10 – очень люблю рисковать</option>
+                <option value="">Выберите ответ</option>
+                <option value="0">Низкая</option>
+                <option value="1">Высокая</option>
             </select>
-
-            <!-- НОВЫЙ ВОПРОС -->
-            <label>Готовы ли вы отказаться от чего-то сегодня ради выгоды в будущем? (0–10):</label>
-            <div class="scale-info">0 – совсем не готов, 10 – полностью готов</div>
-            <input type="number" name="future_sacrifice" min="0" max="10" required>
         </div>
 
-        <!-- Здоровье и курение -->
+        <!-- Здоровье - ВЕРНЫЙ ПОРЯДОК -->
         <div class="form-group">
             <h3 class="section-title">💊 Здоровье</h3>
 

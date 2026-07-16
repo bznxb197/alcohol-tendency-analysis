@@ -97,7 +97,7 @@ docker run -p 8080:8080 alcohol-screening
 ```
 alcohol-tendency-analysis/
 ├── alcohol_analysis.ipynb          # Jupyter-ноутбук с исследовательским анализом данных и обучением модели машинного обучения
-├── alcohol_screening_server.py     # Основной веб-сервер (Flask/FastAPI) для обработки запросов и предсказаний
+├── alcohol_screening_server.py     # Основной веб-сервер (чистые сокеты) для обработки запросов и предсказаний
 ├── model.joblib                    # Сериализованная обученная модель (pickle/joblib), загружаемая сервером
 ├── Dockerfile                      # Инструкция для сборки Docker-образа, упрощающая развёртывание
 ├── screenshots/                    # Скриншоты интерфейса для демонстрации работы

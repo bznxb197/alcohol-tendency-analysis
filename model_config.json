@@ -1,0 +1,56 @@
+{
+  "feature_columns": [
+    "age",
+    "gender",
+    "education_level",
+    "talkativeness",
+    "work_accuracy",
+    "creativity",
+    "stress_tolerance",
+    "task_completion",
+    "work_ethic",
+    "forgiveness",
+    "curiosity",
+    "long_term_focus",
+    "aesthetic_appreciation",
+    "future_orientation",
+    "politeness",
+    "work_efficiency",
+    "generosity",
+    "sociability",
+    "decision_carefulness",
+    "reserved_opinions",
+    "exploitability",
+    "anxiety",
+    "preference_leisure",
+    "nervousness",
+    "perceived_hostility",
+    "general_risk",
+    "drives",
+    "driving_risk",
+    "financial_risk",
+    "health_risk",
+    "future_sacrifice",
+    "self_rated_health",
+    "is_smoker"
+  ],
+  "config": {
+    "model": "LightGBM (tuned)",
+    "calibration": "sigmoid",
+    "threshold_screen": 0.0916856666793128,
+    "threshold_high": 0.22370080007773968,
+    "base_rate": 0.13160383731928119,
+    "band_rates": {
+      "low": 0.041666666666666664,
+      "medium": 0.13918367346938776,
+      "high": 0.33655839668279197
+    }
+  },
+  "versions": {
+    "python": "3.12.7",
+    "scikit-learn": "1.7.2",
+    "lightgbm": "4.7.0",
+    "numpy": "1.26.0",
+    "pandas": "2.1.4"
+  }
+}

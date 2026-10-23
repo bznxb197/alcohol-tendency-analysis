@@ -35,7 +35,8 @@
         .btn-primary { background: #007bff; color: white; }
         .btn-secondary { background: #6c757d; color: white; }
         .disclaimer { margin-top: 25px; padding: 15px; background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 10px; font-size: 12px; color: #856404; }
-        .debug-info { margin-top: 15px; padding: 10px; background: #f8f9fa; border-radius: 5px; font-size: 12px; color: #6c757d; }
+        .context { font-size: 16px; line-height: 1.5; color: #2c3e50; margin: 10px 0 0; }
+        .prob-info { margin-top: 15px; padding: 10px; background: #f8f9fa; border-radius: 5px; font-size: 13px; color: #6c757d; }
     </style>
 </head>
 <body>
@@ -43,12 +44,13 @@
         <div class="result-card">
             <div class="icon" id="icon">🎯</div>
             <div class="result-text" id="resultText">РЕЗУЛЬТАТ АНАЛИЗА</div>
+            <p class="context" id="contextText"></p>
             <div class="recommendation" id="recommendation">
                 <strong>Рекомендация:</strong><br>
                 <span id="recText">Ожидание результата...</span>
             </div>
             <div class="patient-info">
-                <strong>Данные пациента:</strong><br>
+                <strong>Ваши ответы:</strong><br>
                 Возраст: <span id="patientAge">0</span> лет | 
                 Пол: <span id="patientGender">Не указан</span> | 
                 Курение: <span id="patientSmoking">Нет</span>
@@ -57,8 +59,9 @@
                 <a href="/test" class="btn btn-primary">🔄 Пройти тест снова</a>
                 <a href="/" class="btn btn-secondary">🏠 На главную</a>
             </div>
-            <div class="debug-info" id="debugInfo" style="display: none;">
-                Вероятность: <span id="probability">0%</span>
+            <div class="prob-info">
+                Расчётная вероятность попадания в группу риска: <span id="probability">—</span>
+                (в среднем по выборке — около 13%)
             </div>
             <div class="disclaimer">
                 ⚠️ Данный тест является скрининговым инструментом и не заменяет консультацию врача. 
@@ -76,11 +79,13 @@
         const gender = urlParams.get('gender') || 'Не указан';
         const smoking = urlParams.get('smoking') || 'Нет';
         const icon = urlParams.get('icon') || '🎯';
-        const probability = urlParams.get('prob') || '0%';
+        const probability = urlParams.get('prob') || '—';
+        const context = urlParams.get('context') || '';
 
         document.getElementById('icon').textContent = icon;
         document.getElementById('resultText').textContent = resultText;
-        document.getElementById('recText').textContent = decodeURIComponent(recommendation);
+        document.getElementById('recText').textContent = recommendation;
+        document.getElementById('contextText').textContent = context;
         document.getElementById('patientAge').textContent = age;
         document.getElementById('patientGender').textContent = gender;
         document.getElementById('patientSmoking').textContent = smoking;
@@ -95,7 +100,6 @@
             resultElement.className = 'result-text result-low';
         }
 
-        document.getElementById('debugInfo').style.display = 'block';
     </script>
 </body>
 </html>

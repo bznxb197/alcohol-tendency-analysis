@@ -3,25 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Опросник скрининга – 32 вопроса</title>
+    <title>Опросник скрининга – 33 вопроса</title>
     <style>
-        body { 
-            font-family: Arial, sans-serif; 
-            max-width: 800px; 
-            margin: 0 auto; 
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
             padding: 20px;
             background: #f8f9fa;
         }
-        .form-group { 
-            margin: 20px 0; 
+        .form-group {
+            margin: 20px 0;
             padding: 20px;
             background: white;
             border-radius: 8px;
             box-shadow: 0 1px 5px rgba(0,0,0,0.1);
         }
-        label { 
-            display: block; 
-            margin: 15px 0 8px 0; 
+        label {
+            display: block;
+            margin: 15px 0 8px 0;
             font-weight: bold;
             color: #2c3e50;
         }
@@ -31,21 +31,21 @@
             font-style: italic;
             margin-bottom: 8px;
         }
-        select, input { 
-            width: 100%; 
-            padding: 12px; 
-            margin: 8px 0; 
+        select, input {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
             border: 2px solid #ddd;
             border-radius: 6px;
             box-sizing: border-box;
             font-size: 16px;
         }
-        .btn { 
-            background: #28a745; 
-            color: white; 
-            padding: 18px 40px; 
-            border: none; 
-            border-radius: 8px; 
+        .btn {
+            background: #28a745;
+            color: white;
+            padding: 18px 40px;
+            border: none;
+            border-radius: 8px;
             cursor: pointer;
             font-size: 18px;
             width: 100%;
@@ -62,17 +62,18 @@
     </style>
 </head>
 <body>
-    <h1>📋 Опросник для оценки рисков <span style="background: #007bff; color: white; padding: 5px 12px; border-radius: 20px;">32 вопроса</span></h1>
-    <p>Пожалуйста, отвечайте честно – это поможет получить точный результат.</p>
-    
+    <h1>📋 Опросник для оценки рисков <span style="background: #007bff; color: white; padding: 5px 12px; border-radius: 20px;">33 вопроса</span></h1>
+    <p>Пожалуйста, отвечайте честно – это поможет получить точный результат.
+       Вопросы взяты из анкеты RLMS-HSE, на данных которой обучена модель.</p>
+
     <form method="POST" action="/submit-test">
-        
+
         <!-- Демография -->
         <div class="form-group">
             <h3 class="section-title">👤 Основная информация</h3>
-            
+
             <label>Ваш возраст:</label>
-            <input type="number" name="age" min="18" max="100" required>
+            <input type="number" name="age" min="18" max="100" step="1" required>
 
             <label>Ваш пол:</label>
             <select name="gender" required>
@@ -84,241 +85,240 @@
             <label>Ваше образование:</label>
             <select name="education_level" required>
                 <option value="">Выберите образование</option>
-                <option value="1">Среднее (0-6 классов)</option>
-                <option value="2">Незаконченное среднее (7-8 классов)</option>
-                <option value="3">Незаконченное среднее + курсы</option>
+                <option value="1">0–6 классов</option>
+                <option value="2">Незаконченное среднее (7–8 классов)</option>
+                <option value="3">Незаконченное среднее + что-то ещё</option>
                 <option value="4">Законченное среднее</option>
-                <option value="5">Среднее специальное</option>
-                <option value="6">Высшее и выше</option>
+                <option value="5">Законченное среднее специальное</option>
+                <option value="6">Законченное высшее и выше</option>
             </select>
         </div>
 
-        <!-- Личностные характеристики (порядок как в модели) -->
+        <!-- Личностные характеристики. value = коды RLMS (1 = «почти всегда»), их перекодирует сервер -->
         <div class="form-group">
             <h3 class="section-title">🧠 Особенности характера</h3>
-            <p class="scale-info">Оцените по шкале от 1 (почти никогда) до 4 (почти всегда)</p>
+            <p class="scale-info">Насколько часто это про вас?</p>
 
             <label>Вы разговорчивы?</label>
             <select name="talkativeness" required>
-                <option value="">Выберите оценку</option>
-                <option value="1">1 - Почти никогда</option><option value="2">2 - Иногда</option>
-                <option value="3">3 - Чаще всего</option><option value="4">4 - Почти всегда</option>
+                <option value="">Выберите ответ</option>
+                <option value="1">Почти всегда</option>
+                <option value="2">Чаще всего</option>
+                <option value="3">Иногда</option>
+                <option value="4">Почти никогда</option>
             </select>
-
             <label>Выполняя задания, вы очень аккуратны?</label>
             <select name="work_accuracy" required>
-                <option value="">Выберите оценку</option>
-                <option value="1">1 - Почти никогда</option><option value="2">2 - Иногда</option>
-                <option value="3">3 - Чаще всего</option><option value="4">4 - Почти всегда</option>
+                <option value="">Выберите ответ</option>
+                <option value="1">Почти всегда</option>
+                <option value="2">Чаще всего</option>
+                <option value="3">Иногда</option>
+                <option value="4">Почти никогда</option>
             </select>
-
             <label>Вам приходят в голову оригинальные идеи?</label>
             <select name="creativity" required>
-                <option value="">Выберите оценку</option>
-                <option value="1">1 - Почти никогда</option><option value="2">2 - Иногда</option>
-                <option value="3">3 - Чаще всего</option><option value="4">4 - Почти всегда</option>
+                <option value="">Выберите ответ</option>
+                <option value="1">Почти всегда</option>
+                <option value="2">Чаще всего</option>
+                <option value="3">Иногда</option>
+                <option value="4">Почти никогда</option>
             </select>
-
             <label>Вы спокойны в стрессовых ситуациях?</label>
-            <div class="scale-info">Высокая оценка = хорошая стрессоустойчивость</div>
             <select name="stress_tolerance" required>
-                <option value="">Выберите оценку</option>
-                <option value="4">1 - Почти никогда (очень плохо)</option>
-                <option value="3">2 - Иногда (плохо)</option>
-                <option value="2">3 - Чаще всего (хорошо)</option>
-                <option value="1">4 - Почти всегда (очень хорошо)</option>
+                <option value="">Выберите ответ</option>
+                <option value="1">Почти всегда</option>
+                <option value="2">Чаще всего</option>
+                <option value="3">Иногда</option>
+                <option value="4">Почти никогда</option>
             </select>
-
             <label>Вы заканчиваете то, что начали?</label>
-            <div class="scale-info">Высокая оценка = высокая добросовестность</div>
             <select name="task_completion" required>
-                <option value="">Выберите оценку</option>
-                <option value="4">1 - Почти никогда</option>
-                <option value="3">2 - Иногда</option>
-                <option value="2">3 - Чаще всего</option>
-                <option value="1">4 - Почти всегда</option>
+                <option value="">Выберите ответ</option>
+                <option value="1">Почти всегда</option>
+                <option value="2">Чаще всего</option>
+                <option value="3">Иногда</option>
+                <option value="4">Почти никогда</option>
             </select>
-
             <label>Вы очень усердно трудитесь?</label>
-            <div class="scale-info">Высокая оценка = хорошая трудовая этика</div>
             <select name="work_ethic" required>
-                <option value="">Выберите оценку</option>
-                <option value="4">1 - Почти никогда</option>
-                <option value="3">2 - Иногда</option>
-                <option value="2">3 - Чаще всего</option>
-                <option value="1">4 - Почти всегда</option>
+                <option value="">Выберите ответ</option>
+                <option value="1">Почти всегда</option>
+                <option value="2">Чаще всего</option>
+                <option value="3">Иногда</option>
+                <option value="4">Почти никогда</option>
             </select>
-
             <label>Вы легко прощаете других людей?</label>
             <select name="forgiveness" required>
-                <option value="">Выберите оценку</option>
-                <option value="1">1 - Почти никогда</option><option value="2">2 - Иногда</option>
-                <option value="3">3 - Чаще всего</option><option value="4">4 - Почти всегда</option>
+                <option value="">Выберите ответ</option>
+                <option value="1">Почти всегда</option>
+                <option value="2">Чаще всего</option>
+                <option value="3">Иногда</option>
+                <option value="4">Почти никогда</option>
             </select>
-
             <label>Вам очень интересно узнавать что-то новое?</label>
             <select name="curiosity" required>
-                <option value="">Выберите оценку</option>
-                <option value="1">1 - Почти никогда</option><option value="2">2 - Иногда</option>
-                <option value="3">3 - Чаще всего</option><option value="4">4 - Почти всегда</option>
+                <option value="">Выберите ответ</option>
+                <option value="1">Почти всегда</option>
+                <option value="2">Чаще всего</option>
+                <option value="3">Иногда</option>
+                <option value="4">Почти никогда</option>
             </select>
-
             <label>Вам нравится работать над долгосрочными задачами?</label>
-            <div class="scale-info">Высокая оценка = ориентация на долгосрочные цели</div>
             <select name="long_term_focus" required>
-                <option value="">Выберите оценку</option>
-                <option value="4">1 - Почти никогда</option>
-                <option value="3">2 - Иногда</option>
-                <option value="2">3 - Чаще всего</option>
-                <option value="1">4 - Почти всегда</option>
+                <option value="">Выберите ответ</option>
+                <option value="1">Почти всегда</option>
+                <option value="2">Чаще всего</option>
+                <option value="3">Иногда</option>
+                <option value="4">Почти никогда</option>
             </select>
-
             <label>Вы получаете удовольствие от искусства, природы, музыки?</label>
             <select name="aesthetic_appreciation" required>
-                <option value="">Выберите оценку</option>
-                <option value="1">1 - Почти никогда</option><option value="2">2 - Иногда</option>
-                <option value="3">3 - Чаще всего</option><option value="4">4 - Почти всегда</option>
+                <option value="">Выберите ответ</option>
+                <option value="1">Почти всегда</option>
+                <option value="2">Чаще всего</option>
+                <option value="3">Иногда</option>
+                <option value="4">Почти никогда</option>
             </select>
-
             <label>Вы задумываетесь о последствиях своих поступков?</label>
-            <div class="scale-info">Высокая оценка = ориентация на будущее</div>
             <select name="future_orientation" required>
-                <option value="">Выберите оценку</option>
-                <option value="4">1 - Почти никогда</option>
-                <option value="3">2 - Иногда</option>
-                <option value="2">3 - Чаще всего</option>
-                <option value="1">4 - Почти всегда</option>
+                <option value="">Выберите ответ</option>
+                <option value="1">Почти всегда</option>
+                <option value="2">Чаще всего</option>
+                <option value="3">Иногда</option>
+                <option value="4">Почти никогда</option>
             </select>
-
             <label>Вы очень вежливы с другими людьми?</label>
             <select name="politeness" required>
-                <option value="">Выберите оценку</option>
-                <option value="1">1 - Почти никогда</option><option value="2">2 - Иногда</option>
-                <option value="3">3 - Чаще всего</option><option value="4">4 - Почти всегда</option>
+                <option value="">Выберите ответ</option>
+                <option value="1">Почти всегда</option>
+                <option value="2">Чаще всего</option>
+                <option value="3">Иногда</option>
+                <option value="4">Почти никогда</option>
             </select>
-
             <label>Вы работаете очень хорошо и быстро?</label>
-            <div class="scale-info">Высокая оценка = высокая эффективность</div>
             <select name="work_efficiency" required>
-                <option value="">Выберите оценку</option>
-                <option value="4">1 - Почти никогда</option>
-                <option value="3">2 - Иногда</option>
-                <option value="2">3 - Чаще всего</option>
-                <option value="1">4 - Почти всегда</option>
+                <option value="">Выберите ответ</option>
+                <option value="1">Почти всегда</option>
+                <option value="2">Чаще всего</option>
+                <option value="3">Иногда</option>
+                <option value="4">Почти никогда</option>
             </select>
-
             <label>Вы щедро делитесь с другими?</label>
             <select name="generosity" required>
-                <option value="">Выберите оценку</option>
-                <option value="1">1 - Почти никогда</option><option value="2">2 - Иногда</option>
-                <option value="3">3 - Чаще всего</option><option value="4">4 - Почти всегда</option>
+                <option value="">Выберите ответ</option>
+                <option value="1">Почти всегда</option>
+                <option value="2">Чаще всего</option>
+                <option value="3">Иногда</option>
+                <option value="4">Почти никогда</option>
             </select>
-
             <label>Вы легко заводите друзей?</label>
             <select name="sociability" required>
-                <option value="">Выберите оценку</option>
-                <option value="1">1 - Почти никогда</option><option value="2">2 - Иногда</option>
-                <option value="3">3 - Чаще всего</option><option value="4">4 - Почти всегда</option>
+                <option value="">Выберите ответ</option>
+                <option value="1">Почти всегда</option>
+                <option value="2">Чаще всего</option>
+                <option value="3">Иногда</option>
+                <option value="4">Почти никогда</option>
             </select>
-
             <label>Вы тщательно всё обдумываете перед принятием решений?</label>
-            <div class="scale-info">Высокая оценка = высокая осторожность</div>
             <select name="decision_carefulness" required>
-                <option value="">Выберите оценку</option>
-                <option value="4">1 - Почти никогда</option>
-                <option value="3">2 - Иногда</option>
-                <option value="2">3 - Чаще всего</option>
-                <option value="1">4 - Почти всегда</option>
+                <option value="">Выберите ответ</option>
+                <option value="1">Почти всегда</option>
+                <option value="2">Чаще всего</option>
+                <option value="3">Иногда</option>
+                <option value="4">Почти никогда</option>
             </select>
-
             <label>Вы предпочитаете держать свое мнение при себе?</label>
             <select name="reserved_opinions" required>
-                <option value="">Выберите оценку</option>
-                <option value="1">1 - Почти никогда</option><option value="2">2 - Иногда</option>
-                <option value="3">3 - Чаще всего</option><option value="4">4 - Почти всегда</option>
+                <option value="">Выберите ответ</option>
+                <option value="1">Почти всегда</option>
+                <option value="2">Чаще всего</option>
+                <option value="3">Иногда</option>
+                <option value="4">Почти никогда</option>
             </select>
-
             <label>Люди используют вас в своих интересах?</label>
             <select name="exploitability" required>
-                <option value="">Выберите оценку</option>
-                <option value="1">1 - Почти никогда</option><option value="2">2 - Иногда</option>
-                <option value="3">3 - Чаще всего</option><option value="4">4 - Почти всегда</option>
+                <option value="">Выберите ответ</option>
+                <option value="1">Почти всегда</option>
+                <option value="2">Чаще всего</option>
+                <option value="3">Иногда</option>
+                <option value="4">Почти никогда</option>
             </select>
-
             <label>Вы склонны к беспокойству?</label>
             <select name="anxiety" required>
-                <option value="">Выберите оценку</option>
-                <option value="1">1 - Почти никогда</option><option value="2">2 - Иногда</option>
-                <option value="3">3 - Чаще всего</option><option value="4">4 - Почти всегда</option>
+                <option value="">Выберите ответ</option>
+                <option value="1">Почти всегда</option>
+                <option value="2">Чаще всего</option>
+                <option value="3">Иногда</option>
+                <option value="4">Почти никогда</option>
             </select>
-
             <label>Вам больше нравится расслабляться, чем усердно трудиться?</label>
             <select name="preference_leisure" required>
-                <option value="">Выберите оценку</option>
-                <option value="1">1 - Почти никогда</option><option value="2">2 - Иногда</option>
-                <option value="3">3 - Чаще всего</option><option value="4">4 - Почти всегда</option>
+                <option value="">Выберите ответ</option>
+                <option value="1">Почти всегда</option>
+                <option value="2">Чаще всего</option>
+                <option value="3">Иногда</option>
+                <option value="4">Почти никогда</option>
             </select>
-
             <label>Вас легко заставить нервничать?</label>
             <select name="nervousness" required>
-                <option value="">Выберите оценку</option>
-                <option value="1">1 - Почти никогда</option><option value="2">2 - Иногда</option>
-                <option value="3">3 - Чаще всего</option><option value="4">4 - Почти всегда</option>
+                <option value="">Выберите ответ</option>
+                <option value="1">Почти всегда</option>
+                <option value="2">Чаще всего</option>
+                <option value="3">Иногда</option>
+                <option value="4">Почти никогда</option>
             </select>
-
             <label>Люди не очень хорошо к вам относятся?</label>
             <select name="perceived_hostility" required>
-                <option value="">Выберите оценку</option>
-                <option value="1">1 - Почти никогда</option><option value="2">2 - Иногда</option>
-                <option value="3">3 - Чаще всего</option><option value="4">4 - Почти всегда</option>
+                <option value="">Выберите ответ</option>
+                <option value="1">Почти всегда</option>
+                <option value="2">Чаще всего</option>
+                <option value="3">Иногда</option>
+                <option value="4">Почти никогда</option>
             </select>
         </div>
 
-        <!-- Рисковое поведение + future_sacrifice (все шкалы 0–10) -->
+        <!-- Склонность к риску (0–10). «na» = затрудняюсь ответить -->
         <div class="form-group">
             <h3 class="section-title">🎯 Склонность к риску и планированию</h3>
 
-            <label>Общая склонность к риску (0–10):</label>
-            <div class="scale-info">0 – совсем не рискую, 10 – очень люблю рисковать</div>
-            <input type="number" name="general_risk" min="0" max="10" required>
-
-            <label>Склонность к риску при вождении (0–10):</label>
+            <label>Насколько вы в целом готовы рисковать? (0–10)</label>
+            <select name="general_risk" required>
+                <option value="">Выберите оценку</option>
+                <option value="0">0 – совсем не готов</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10 – всегда готов</option>
+                <option value="na">Затрудняюсь ответить</option>
+            </select>
+            <label>Водите ли вы автомобиль?</label>
+            <select name="drives" id="drives" required>
+                <option value="">Выберите ответ</option>
+                <option value="1">Да</option>
+                <option value="0">Нет</option>
+            </select>
+            <div id="driving-block">
+            <label>Насколько вы готовы рисковать, когда ведёте машину? (0–10)</label>
             <select name="driving_risk" required>
                 <option value="">Выберите оценку</option>
-                <option value="0">0 – совсем не рискую</option>
-                <option value="1">1</option><option value="2">2</option><option value="3">3</option>
-                <option value="4">4</option><option value="5">5</option>
-                <option value="6">6</option><option value="7">7</option>
-                <option value="8">8</option><option value="9">9</option>
-                <option value="10">10 – очень люблю рисковать</option>
+                <option value="0">0 – совсем не готов</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10 – всегда готов</option>
+                <option value="na">Затрудняюсь ответить</option>
             </select>
-
-            <label>Склонность к финансовому риску (0–10):</label>
+            </div>
+            <label>Насколько вы готовы рисковать в финансовых вопросах? (0–10)</label>
             <select name="financial_risk" required>
                 <option value="">Выберите оценку</option>
-                <option value="0">0 – совсем не рискую</option>
-                <option value="1">1</option><option value="2">2</option><option value="3">3</option>
-                <option value="4">4</option><option value="5">5</option>
-                <option value="6">6</option><option value="7">7</option>
-                <option value="8">8</option><option value="9">9</option>
-                <option value="10">10 – очень люблю рисковать</option>
+                <option value="0">0 – совсем не готов</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10 – всегда готов</option>
+                <option value="na">Затрудняюсь ответить</option>
             </select>
-
-            <label>Склонность к риску для здоровья (0–10):</label>
+            <label>Насколько вы готовы рисковать в вопросах безопасности труда? (0–10)</label>
             <select name="health_risk" required>
                 <option value="">Выберите оценку</option>
-                <option value="0">0 – совсем не рискую</option>
-                <option value="1">1</option><option value="2">2</option><option value="3">3</option>
-                <option value="4">4</option><option value="5">5</option>
-                <option value="6">6</option><option value="7">7</option>
-                <option value="8">8</option><option value="9">9</option>
-                <option value="10">10 – очень люблю рисковать</option>
+                <option value="0">0 – совсем не готов</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10 – всегда готов</option>
+                <option value="na">Затрудняюсь ответить</option>
             </select>
-
-            <!-- НОВЫЙ ВОПРОС -->
-            <label>Готовы ли вы отказаться от чего-то сегодня ради выгоды в будущем? (0–10):</label>
-            <div class="scale-info">0 – совсем не готов, 10 – полностью готов</div>
-            <input type="number" name="future_sacrifice" min="0" max="10" required>
+            <label>Вы из тех, кто скорее откажется от чего-то сегодня ради выгоды в будущем? (0–10)</label>
+            <select name="future_sacrifice" required>
+                <option value="">Выберите оценку</option>
+                <option value="0">0 – совсем не про меня</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10 – полностью про меня</option>
+                <option value="na">Затрудняюсь ответить</option>
+            </select>
         </div>
 
         <!-- Здоровье и курение -->
@@ -328,9 +328,9 @@
             <label>Как вы оцениваете состояние своего здоровья?</label>
             <select name="self_rated_health" required>
                 <option value="">Выберите оценку</option>
-                <option value="1">Отличное</option>
+                <option value="1">Очень хорошее</option>
                 <option value="2">Хорошее</option>
-                <option value="3">Удовлетворительное</option>
+                <option value="3">Среднее, не хорошее, но и не плохое</option>
                 <option value="4">Плохое</option>
                 <option value="5">Очень плохое</option>
             </select>
@@ -343,7 +343,23 @@
             </select>
         </div>
 
-        <button type="submit" class="btn">🎯 Получить результат анализа</button>
+        <button type="submit" class="btn">🎯 Получить результат</button>
     </form>
+
+    <script>
+        // Тем, кто не водит, вопрос о риске за рулём не задаётся (как в RLMS).
+        // Отключённое поле не отправляется, сервер подставит driving_risk = 0.
+        const drives = document.getElementById('drives');
+        const drivingBlock = document.getElementById('driving-block');
+        const drivingRisk = document.querySelector('[name="driving_risk"]');
+        function syncDriving() {
+            const notDriver = drives.value === '0';
+            drivingBlock.style.display = notDriver ? 'none' : 'block';
+            drivingRisk.disabled = notDriver;
+            drivingRisk.required = !notDriver;
+        }
+        drives.addEventListener('change', syncDriving);
+        syncDriving();
+    </script>
 </body>
 </html>
